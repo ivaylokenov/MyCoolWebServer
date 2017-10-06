@@ -9,7 +9,6 @@
 
     public class HomeController
     {
-        // GET /
         public IHttpResponse Index()
         {
             var response = new ViewResponse(HttpStatusCode.Ok, new IndexView());
@@ -18,8 +17,7 @@
 
             return response;
         }
-
-        // Get /testsession
+        
         public IHttpResponse SessionTest(IHttpRequest req)
         {
             var session = req.Session;

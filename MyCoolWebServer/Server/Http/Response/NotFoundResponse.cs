@@ -1,12 +1,13 @@
 ﻿namespace MyCoolWebServer.Server.Http.Response
 {
+    using Common;
     using Enums;
 
-    public class NotFoundResponse : HttpResponse
+    public class NotFoundResponse : ViewResponse
     {
         public NotFoundResponse()
+            : base(HttpStatusCode.NotFound, new NotFoundView())
         {
-            this.StatusCode = HttpStatusCode.NotFound;
         }
     }
 }

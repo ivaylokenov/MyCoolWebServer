@@ -59,7 +59,7 @@
             
             while (true)
             {
-                int numberOfBytesRead = this.client.Receive(data.Array, SocketFlags.None);
+                int numberOfBytesRead = await this.client.ReceiveAsync(data.Array, SocketFlags.None);
 
                 if (numberOfBytesRead == 0)
                 {
