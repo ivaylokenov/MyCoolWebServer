@@ -11,6 +11,9 @@
 
     public class AccountController : Controller
     {
+        private const string RegisterView = @"account\register";
+        private const string LoginView = @"account\login";
+
         private readonly IUserService users;
 
         public AccountController()
@@ -21,7 +24,7 @@
         public IHttpResponse Register()
         {
             this.SetDefaultViewData();
-            return this.FileViewResponse(@"account\register");
+            return this.FileViewResponse(RegisterView);
         }
 
         public IHttpResponse Register(
@@ -29,16 +32,14 @@
             RegisterUserViewModel model)
         {
             this.SetDefaultViewData();
-
-            // Validate the model
+            
             if (model.Username.Length < 3
                 || model.Password.Length < 3
                 || model.ConfirmPassword != model.Password)
             {
-                this.ViewData["showError"] = "block";
-                this.ViewData["error"] = "Invalid user details";
+                this.AddError("Invalid user details");
 
-                return this.FileViewResponse(@"account\register");
+                return this.FileViewResponse(RegisterView);
             }
 
             var success = this.users.Create(model.Username, model.Password);
@@ -51,17 +52,16 @@
             }
             else
             {
-                this.ViewData["showError"] = "block";
-                this.ViewData["error"] = "This username is taken";
+                this.AddError("This username is taken");
 
-                return this.FileViewResponse(@"account\register");
+                return this.FileViewResponse(RegisterView);
             }
         }
 
         public IHttpResponse Login()
         {
             this.SetDefaultViewData();
-            return this.FileViewResponse(@"account\login");
+            return this.FileViewResponse(LoginView);
         }
 
         public IHttpResponse Login(
@@ -71,10 +71,9 @@
             if (string.IsNullOrWhiteSpace(model.Username)
                 || string.IsNullOrWhiteSpace(model.Password))
             {
-                this.ViewData["error"] = "You have empty fields";
-                this.ViewData["showError"] = "block";
+                this.AddError("You have empty fields");
 
-                return this.FileViewResponse(@"account\login");
+                return this.FileViewResponse(LoginView);
             }
 
             var success = this.users.Find(model.Username, model.Password);
@@ -87,10 +86,9 @@
             }
             else
             {
-                this.ViewData["error"] = "Invalid user details";
-                this.ViewData["showError"] = "block";
+                this.AddError("Invalid user details");
 
-                return this.FileViewResponse(@"account\login");
+                return this.FileViewResponse(LoginView);
             }
         }
 

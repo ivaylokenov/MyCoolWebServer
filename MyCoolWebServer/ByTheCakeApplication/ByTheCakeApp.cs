@@ -6,6 +6,7 @@
     using Server.Contracts;
     using Server.Routing.Contracts;
     using ViewModels.Account;
+    using ViewModels.Products;
 
     public class ByTheCakeApp : IApplication
     {
@@ -26,17 +27,29 @@
                 .Get("/about", req => new HomeController().About());
 
             appRouteConfig
-                .Get("/add", req => new CakesController().Add());
+                .Get("/add", req => new ProductsController().Add());
 
             appRouteConfig
                 .Post(
                     "/add",
-                    req => new CakesController().Add(req.FormData["name"], req.FormData["price"]));
+                    req => new ProductsController().Add(
+                        new AddProductViewModel
+                        {
+                            Name = req.FormData["name"],
+                            Price = decimal.Parse(req.FormData["price"]),
+                            ImageUrl = req.FormData["imageUrl"]
+                        }));
 
             appRouteConfig
                 .Get(
                     "/search", 
-                    req => new CakesController().Search(req));
+                    req => new ProductsController().Search(req));
+
+            appRouteConfig
+                .Get(
+                    "/cakes/{(?<id>[0-9]+)}",
+                    req => new ProductsController()
+                        .Details(int.Parse(req.UrlParameters["id"])));
 
             appRouteConfig
                 .Get(

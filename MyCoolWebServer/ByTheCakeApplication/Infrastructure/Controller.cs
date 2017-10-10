@@ -39,6 +39,12 @@
             return new ViewResponse(HttpStatusCode.Ok, new FileView(result));
         }
 
+        protected void AddError(string errorMessage)
+        {
+            this.ViewData["showError"] = "block";
+            this.ViewData["error"] = errorMessage;
+        }
+
         private string ProcessFileHtml(string fileName)
         {
             var layoutHtml = File.ReadAllText(string.Format(DefaultPath, "layout"));
