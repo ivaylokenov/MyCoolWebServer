@@ -1,4 +1,4 @@
-﻿namespace MyCoolWebServer.ByTheCakeApplication.Models
+﻿namespace MyCoolWebServer.ByTheCakeApplication.ViewModels
 {
     public class Cake
     {

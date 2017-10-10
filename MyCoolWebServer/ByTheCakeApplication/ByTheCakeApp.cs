@@ -1,11 +1,22 @@
 ﻿namespace MyCoolWebServer.ByTheCakeApplication
 {
     using Controllers;
+    using Data;
+    using Microsoft.EntityFrameworkCore;
     using Server.Contracts;
     using Server.Routing.Contracts;
+    using ViewModels.Account;
 
     public class ByTheCakeApp : IApplication
     {
+        public void InitializeDatabase()
+        {
+            using (var db = new ByTheCakeDbContext())
+            {
+                db.Database.Migrate();
+            }
+        }
+
         public void Configure(IAppRouteConfig appRouteConfig)
         {
             appRouteConfig
@@ -29,13 +40,41 @@
 
             appRouteConfig
                 .Get(
+                    "/register",
+                    req => new AccountController().Register());
+
+            appRouteConfig
+                .Post(
+                    "/register",
+                    req => new AccountController().Register(
+                        req,
+                        new RegisterUserViewModel
+                        {
+                            Username = req.FormData["username"],
+                            Password = req.FormData["password"],
+                            ConfirmPassword = req.FormData["confirm-password"]
+                        }));
+
+            appRouteConfig
+                .Get(
                     "/login",
                     req => new AccountController().Login());
 
             appRouteConfig
                 .Post(
                     "/login",
-                    req => new AccountController().Login(req));
+                    req => new AccountController().Login(
+                        req,
+                        new LoginViewModel
+                        {
+                            Username = req.FormData["username"],
+                            Password = req.FormData["password"]
+                        }));
+
+            appRouteConfig
+                .Get(
+                    "/profile",
+                    req => new AccountController().Profile(req));
 
             appRouteConfig
                 .Post(

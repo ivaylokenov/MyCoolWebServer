@@ -17,7 +17,8 @@
         {
             this.ViewData = new Dictionary<string, string>
             {
-                ["authDisplay"] = "block"
+                ["authDisplay"] = "block",
+                ["showError"] = "none"
             };
         }
 

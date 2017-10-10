@@ -1,12 +1,11 @@
 ﻿namespace MyCoolWebServer.ByTheCakeApplication.Controllers
 {
     using Data;
-    using Models;
     using Infrastructure;
     using Server.Http.Contracts;
     using Server.Http.Response;
     using System.Linq;
-    using System;
+    using ViewModels;
 
     public class ShoppingController : Controller
     {

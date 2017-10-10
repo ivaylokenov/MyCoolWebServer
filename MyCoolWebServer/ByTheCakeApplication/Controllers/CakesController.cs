@@ -2,7 +2,7 @@
 {
     using Data;
     using Infrastructure;
-    using Models;
+    using ViewModels;
     using Server.Http.Contracts;
     using System;
     using System.Linq;

@@ -194,11 +194,11 @@
                 return;
             }
 
-            var queryPairs = query.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
+            var queryPairs = query.Split(new[] { '&' });
 
             foreach (var queryPair in queryPairs)
             {
-                var queryKvp = queryPair.Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+                var queryKvp = queryPair.Split(new[] { '=' });
 
                 if (queryKvp.Length != 2)
                 {

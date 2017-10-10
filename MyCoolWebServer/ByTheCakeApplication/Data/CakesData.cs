@@ -1,10 +1,10 @@
 ﻿namespace MyCoolWebServer.ByTheCakeApplication.Data
 {
-    using Models;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using ViewModels;
 
     public class CakesData
     {

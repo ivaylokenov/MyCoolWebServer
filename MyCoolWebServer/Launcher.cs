@@ -15,6 +15,8 @@
         public void Run()
         {
             var mainApplication = new ByTheCakeApp();
+            mainApplication.InitializeDatabase();
+
             var appRouteConfig = new AppRouteConfig();
             mainApplication.Configure(appRouteConfig);
 
