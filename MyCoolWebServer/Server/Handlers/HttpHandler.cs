@@ -29,7 +29,7 @@
                 var anonymousPaths = new[] { "/login", "/register" };
 
                 if (!anonymousPaths.Contains(context.Request.Path) &&
-                    !context.Request.Session.Contains(SessionStore.CurrentUserKey))
+                    (context.Request.Session == null || !context.Request.Session.Contains(SessionStore.CurrentUserKey)))
                 {
                     return new RedirectResponse(anonymousPaths.First());
                 }
