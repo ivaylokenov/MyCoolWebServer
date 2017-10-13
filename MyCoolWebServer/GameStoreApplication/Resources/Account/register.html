@@ -1,0 +1,36 @@
+﻿<main class="col-4 ml-auto mr-auto text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center"><h1 class="display-3">Register</h1></div>
+                <br />
+                
+                <form method="post">
+
+                    <div class="form-group row">
+                        <label class="sr-only">E-mail</label>
+                        <input class="form-control" name="email" placeholder="somebody@example.com" />
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="sr-only">Full Name</label>
+                        <input pattern="^[a-zA-Z -.]+$" class="form-control" name="full-name" placeholder="Full Name" />
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="sr-only">Password</label>
+                        <input type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" name="password" class="form-control" placeholder="Password" />
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="sr-only">Confirm Password</label>
+                        <input type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" name="confirm-password" class="form-control" placeholder="Confirm Password" />
+                    </div>
+
+                    <input type="submit" class="btn btn-outline-success btn-lg btn-block" value="Register" />
+                </form>
+                <br />
+            </div>
+        </div>
+    </div>
+</main>

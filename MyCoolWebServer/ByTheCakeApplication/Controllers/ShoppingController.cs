@@ -9,7 +9,7 @@
     using System.Linq;
     using ViewModels;
 
-    public class ShoppingController : Controller
+    public class ShoppingController : BaseController
     {
         private readonly IUserService users;
         private readonly IProductService products;

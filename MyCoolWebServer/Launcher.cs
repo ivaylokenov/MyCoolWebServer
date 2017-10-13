@@ -1,6 +1,6 @@
 ﻿namespace MyCoolWebServer
 {
-    using ByTheCakeApplication;
+    using GameStoreApplication;
     using Server;
     using Server.Contracts;
     using Server.Routing;
@@ -14,7 +14,7 @@
 
         public void Run()
         {
-            var mainApplication = new ByTheCakeApp();
+            var mainApplication = new GameStoreApp();
             mainApplication.InitializeDatabase();
 
             var appRouteConfig = new AppRouteConfig();

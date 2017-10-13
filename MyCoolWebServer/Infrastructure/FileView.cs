@@ -1,4 +1,4 @@
-﻿namespace MyCoolWebServer.ByTheCakeApplication.Views.Home
+﻿namespace MyCoolWebServer.Infrastructure
 {
     using Server.Contracts;
 

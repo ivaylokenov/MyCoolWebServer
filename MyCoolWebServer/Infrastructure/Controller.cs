@@ -1,26 +1,29 @@
-﻿namespace MyCoolWebServer.ByTheCakeApplication.Infrastructure
+﻿namespace MyCoolWebServer.Infrastructure
 {
     using Server.Enums;
     using Server.Http.Contracts;
     using Server.Http.Response;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.IO;
     using System.Linq;
-    using Views.Home;
 
     public abstract class Controller 
     {
-        public const string DefaultPath = @"ByTheCakeApplication\Resources\{0}.html";
+        public const string DefaultPath = @"{0}\Resources\{1}.html";
         public const string ContentPlaceholder = "{{{content}}}";
 
         protected Controller()
         {
             this.ViewData = new Dictionary<string, string>
             {
-                ["authDisplay"] = "block",
+                ["anonymousDisplay"] = "none",
+                ["authDisplay"] = "flex",
                 ["showError"] = "none"
             };
         }
+
+        protected abstract string ApplicationDirectory { get; }
 
         protected IDictionary<string, string> ViewData { get; private set; }
         
@@ -39,18 +42,41 @@
             return new ViewResponse(HttpStatusCode.Ok, new FileView(result));
         }
 
-        protected void AddError(string errorMessage)
+        protected IHttpResponse RedirectResponse(string route)
+            => new RedirectResponse(route);
+
+        protected void ShowError(string errorMessage)
         {
             this.ViewData["showError"] = "block";
             this.ViewData["error"] = errorMessage;
         }
 
+        protected bool ValidateModel(object model)
+        {
+            var context = new ValidationContext(model);
+            var results = new List<ValidationResult>();
+
+            if (Validator.TryValidateObject(model, context, results, true) == false)
+            {
+                foreach (var result in results)
+                {
+                    if (result != ValidationResult.Success)
+                    {
+                        this.ShowError(result.ErrorMessage);
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
         private string ProcessFileHtml(string fileName)
         {
-            var layoutHtml = File.ReadAllText(string.Format(DefaultPath, "layout"));
+            var layoutHtml = File.ReadAllText(string.Format(DefaultPath, this.ApplicationDirectory, "layout"));
 
             var fileHtml = File
-                .ReadAllText(string.Format(DefaultPath, fileName));
+                .ReadAllText(string.Format(DefaultPath, this.ApplicationDirectory, fileName));
 
             var result = layoutHtml.Replace(ContentPlaceholder, fileHtml);
 

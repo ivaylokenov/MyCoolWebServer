@@ -1,6 +1,5 @@
 ﻿namespace MyCoolWebServer.ByTheCakeApplication.Controllers
 {
-    using Infrastructure;
     using Server.Http;
     using Server.Http.Contracts;
     using Server.Http.Response;
@@ -9,7 +8,7 @@
     using ViewModels;
     using ViewModels.Account;
 
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private const string RegisterView = @"account\register";
         private const string LoginView = @"account\login";
@@ -37,7 +36,7 @@
                 || model.Password.Length < 3
                 || model.ConfirmPassword != model.Password)
             {
-                this.AddError("Invalid user details");
+                this.ShowError("Invalid user details");
 
                 return this.FileViewResponse(RegisterView);
             }
@@ -52,7 +51,7 @@
             }
             else
             {
-                this.AddError("This username is taken");
+                this.ShowError("This username is taken");
 
                 return this.FileViewResponse(RegisterView);
             }
@@ -71,7 +70,7 @@
             if (string.IsNullOrWhiteSpace(model.Username)
                 || string.IsNullOrWhiteSpace(model.Password))
             {
-                this.AddError("You have empty fields");
+                this.ShowError("You have empty fields");
 
                 return this.FileViewResponse(LoginView);
             }
@@ -86,7 +85,7 @@
             }
             else
             {
-                this.AddError("Invalid user details");
+                this.ShowError("Invalid user details");
 
                 return this.FileViewResponse(LoginView);
             }
